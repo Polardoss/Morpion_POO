@@ -35,9 +35,9 @@ class Joueur:
     def minimax(self, plateau, joueur):
         # Conditions de fin de récursivité
         if plateau.verif_win(joueur):
-            return (1 if joueur.symbole == 'X' else -1), None
+            return (1 if joueur.symbole == self.symbole else -1), None
         elif plateau.verif_win(joueur.joueur_adverse()):
-            return (-1 if joueur.symbole == 'X' else 1), None
+            return (-1 if joueur.symbole == self.symbole else 1), None
         elif plateau.est_full():
             return 0, None
 
@@ -52,7 +52,7 @@ class Joueur:
             scores.append(score)
             listes_coup.append(coup)
 
-        if joueur.symbole == 'X':
+        if joueur.symbole == self.symbole:
             meilleur_score = max(scores)
             meilleur_coup = listes_coup[scores.index(meilleur_score)]
         else:
