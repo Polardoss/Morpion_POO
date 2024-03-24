@@ -1,10 +1,11 @@
 from Plateau import *
 from Joueur import *
 
+
 class Partie:
-    def __init__(self, joueur1, joueur2):
-        self.joueur1 = joueur1
-        self.joueur2 = joueur2
+    def __init__(self, ):
+        self.joueur1 = Joueur("O")
+        self.joueur2 = Joueur("X", True)
         self.joueur_actuel = self.joueur1
         self.plateau = Plateau()
 
@@ -23,8 +24,18 @@ class Partie:
 
             #########################
             print(self.plateau.coups_possibles())
-            ligne,colonne = self.joueur_actuel.choisir_coup(self.plateau)
-            self.plateau = self.joueur_actuel.remplire_case(ligne, colonne, self.plateau)
+
+            if not self.joueur_actuel.is_ia:
+                ligne,colonne = self.joueur_actuel.choisir_coup(self.plateau)
+                self.plateau = self.joueur_actuel.remplire_case(ligne, colonne, self.plateau)
+            else:
+                score, coup = self.joueur_actuel.minimax(self.plateau, self.joueur_actuel)
+                print(f"L'IA choisit la case : {coup[0]}, {coup[1]} avec un score {score}")
+                self.plateau = self.joueur_actuel.remplire_case(coup[0], coup[1], self.plateau)
+
+
+            
+            
             self.plateau.afficher()
             if self.plateau.verif_win(self.joueur_actuel):
                 print(f"Le joueur {self.joueur_actuel.symbole} a WIn ! ")

@@ -1,7 +1,6 @@
 import unittest
 import Plateau
 import Joueur
-import Ia
 
 class TestPlateau(unittest.TestCase):
 
@@ -80,17 +79,17 @@ class TestJoueur(unittest.TestCase):
 
 class TestIA(unittest.TestCase):
     def setUp(self):
-        self.ia = Ia.IA('X')
+        self.ia = Joueur.Joueur("X", True)
         self.plateau = Plateau.Plateau()
 
     def test_choisir_coup_gagnant(self):
         self.plateau.plateau = [
-            ['O', 'X', '_'],
-            ['_', 'X', '_'],
-            ['O', '_', 'O']
+            ['O', 'X', 'O'],
+            ['_', 'X', 'O'],
+            ['X', 'O', '_']
         ]
         coup = self.ia.choisir_coup(self.plateau)
-        self.assertEqual(coup, [2, 1])  # L'IA doit choisir [2, 1] pour gagner
+        self.assertEqual(coup, [2, 2])  # L'IA doit choisir [2, 2] pour ne pas perdre
 
 
 
